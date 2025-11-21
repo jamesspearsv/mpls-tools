@@ -116,6 +116,7 @@ function submitCheckout() {
 
 <style lang="css" scoped>
 .container {
+  --sidebar-width: 25dvw;
   display: flex;
   position: absolute;
   top: 3.75rem;
@@ -125,16 +126,54 @@ function submitCheckout() {
   overflow-x: hidden;
 }
 
+.form-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  /* background-color: rebeccapurple; */
+  width: calc(100dvw - var(--sidebar-width));
+}
+
+.form-section:has(+ .checkout-section.hidden-element) {
+  width: 100dvw;
+}
+
+.hidden-element {
+  /* TODO: absolute positioning is not moving this element at all.
+  fix this!
+   */
+  margin-left: var(--sidebar-width);
+}
+
+.checkout-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* background-color: purple; */
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: var(--sidebar-width);
+}
+
 section {
   transition: all 200ms ease-in-out;
 }
 
-.form-section:has(+ .checkout-section.hidden-element) {
+/* .form-section:has(+ .checkout-section.hidden-element) {
   width: 100%;
-}
+} */
 
-.form-section {
-  /* background-color: red; */
+/* .form-section {
+  background-color: red;
   padding-top: 7rem;
   display: flex;
   flex-direction: column;
@@ -142,7 +181,7 @@ section {
   align-items: center;
   height: 100%;
   width: 70%;
-}
+} */
 
 .reset-button {
   margin-top: 0.5rem;
@@ -151,7 +190,7 @@ section {
   gap: 0.5rem;
 }
 
-.checkout-section.hidden-element {
+/* .checkout-section.hidden-element {
   margin-right: -30%;
 }
 
@@ -169,7 +208,7 @@ section {
   top: 0;
   bottom: 0;
   right: 0;
-}
+} */
 
 .checkout-section-header,
 .button-container {
