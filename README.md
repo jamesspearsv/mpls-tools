@@ -1,9 +1,14 @@
-# Sierra Offline Circulation Tool
+# MPLS Tools
 
-A simple circulation tool built to help manage offline circulations at a public library
+A collection of internal tools developed for the Morgantown Public Library System. 
 
-> [!IMPORTANT]
-> This app is in active development subject to breaking changes without notice.
+Current tools include 
+
+- Offline cicrulation module
+
+Planned tools incude
+
+- Reference statistics recording
 
 ## App Structure
 
