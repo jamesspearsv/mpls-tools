@@ -32,7 +32,7 @@ function submitCheckout() {
   const url = `/api/checkouts`
 
   async function postCheckout() {
-    const res = await fetch('/api/checkouts', {
+    const res = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({
         patronBarcode: patronBarcode.value,
@@ -87,8 +87,8 @@ function submitCheckout() {
       </div>
       <div>
         <div>Item Barcodes</div>
-        <div v-for="(item, index) in itemBarcodes">
-          <div :key="index" class="item-barcode">
+        <div v-for="(item, index) in itemBarcodes" :key="item">
+          <div class="item-barcode">
             <button @click="() => removeItem(index)"><FeatherIcon icon="x" /></button>
             <span>
               {{ item }}
@@ -109,7 +109,8 @@ function submitCheckout() {
     </section>
   </main>
 </template>
-<style scoped>
+
+<style lang="css" scoped>
 main {
   display: flex;
   /* gap: 1rem; */

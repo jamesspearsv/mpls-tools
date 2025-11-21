@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "feather-icons": "^4.29.2",
+    "jump-css": "^0.5.0",
+    "types": "*",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "types": "*"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.1",

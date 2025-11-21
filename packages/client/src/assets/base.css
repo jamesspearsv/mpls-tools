@@ -1,7 +1,5 @@
 @import url('./reset.css');
-@import url('./pico.violet.min.css');
-
-:root {
+c :root {
   --sp-00: 0.5rem;
   --sp-0: 1rem;
   --sp-1: 1.5rem;

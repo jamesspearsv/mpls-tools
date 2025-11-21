@@ -12,7 +12,6 @@ const checkouts = ref<Checkout[] | null>(null)
 onMounted(fetchCheckouts)
 
 async function fetchCheckouts() {
-  const url = `/api/checkouts`
   const res = await fetch('/api/checkouts')
   const result = await res.json()
   if (result.success) {
@@ -26,7 +25,7 @@ function exportCheckouts() {
   )
 
   if (confirmation) {
-    let link = document.createElement('a')
+    const link = document.createElement('a')
     link.download = `offline_checkout_${new Date().toISOString()}.csv`
     let checkoutsString = 'checkout_id,patron_barcode,item_barcode\n'
 
@@ -81,7 +80,7 @@ async function updateCheckouts() {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="checkout in checkouts">
+        <tr v-for="checkout in checkouts" :key="checkout.id">
           <td>{{ new Date(checkout.checkoutDate).toLocaleString() }}</td>
           <td>{{ checkout.patronBarcode }}</td>
           <td>{{ checkout.itemBarcode }}</td>

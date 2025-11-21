@@ -1,12 +1,12 @@
 # MPLS Tools
 
-A collection of internal tools developed for the Morgantown Public Library System. 
+A collection of internal tools developed for the Morgantown Public Library System.
 
-Current tools include 
+Current tools include
 
-- Offline cicrulation module
+- Offline circulation module
 
-Planned tools incude
+Planned tools include
 
 - Reference statistics recording
 
