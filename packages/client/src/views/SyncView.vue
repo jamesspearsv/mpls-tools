@@ -59,7 +59,7 @@ async function updateCheckouts() {
 }
 </script>
 <template>
-  <main>
+  <section>
     <section>
       <div class="action-bar">
         <article v-if="checkouts">
@@ -87,7 +87,7 @@ async function updateCheckouts() {
         </tr>
       </tbody>
     </table>
-  </main>
+  </section>
 </template>
 <style scoped>
 main {

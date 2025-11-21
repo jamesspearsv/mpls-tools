@@ -6,7 +6,7 @@ const router = createRouter({
     // TODO: Add landing route for `/` path
     {
       path: '/checkout',
-      component: () => import('@/views/CircWrapper.vue'),
+      component: () => import('@/layouts/OfflineCirculation.vue'),
       children: [
         { path: '', name: 'checkout', component: () => import('@/views/CheckoutView.vue') },
         { path: 'sync', name: 'sync', component: () => import('@/views/SyncView.vue') },

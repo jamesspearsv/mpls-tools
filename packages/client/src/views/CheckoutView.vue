@@ -55,7 +55,8 @@ function submitCheckout() {
 </script>
 
 <template>
-  <main>
+  <div class="container">
+    <!-- Check out form section -->
     <section class="form-section">
       <form @submit.prevent="handleSubmit">
         <fieldset>
@@ -65,7 +66,7 @@ function submitCheckout() {
             name="barcode"
             v-model="inputValue"
             autocomplete="off"
-            minlength="14"
+            minlength="1"
             maxlength="14"
             autofocus
             required
@@ -80,13 +81,16 @@ function submitCheckout() {
         <span>Reset</span>
       </button>
     </section>
+
+    <!-- Current checkout sidebar -->
     <section :class="{ 'checkout-section': true, 'hidden-element': !patronBarcode }">
-      <h3>Current Checkout</h3>
-      <div>
-        Patron Barcode: <span>{{ patronBarcode }}</span>
+      <div class="checkout-section-header">
+        <h3>Current Checkout</h3>
+        <div>
+          Patron Barcode: <span>{{ patronBarcode }}</span>
+        </div>
       </div>
       <div>
-        <div>Item Barcodes</div>
         <div v-for="(item, index) in itemBarcodes" :key="item">
           <div class="item-barcode">
             <button @click="() => removeItem(index)"><FeatherIcon icon="x" /></button>
@@ -107,19 +111,17 @@ function submitCheckout() {
       </div>
       <div v-if="error" class="error-message">{{ error }}</div>
     </section>
-  </main>
+  </div>
 </template>
 
 <style lang="css" scoped>
-main {
+.container {
   display: flex;
-  /* gap: 1rem; */
-  padding: var(--sp-0);
   position: absolute;
-  bottom: 0;
-  top: var(--sp-4);
+  top: 3.75rem;
   left: 0;
   right: 0;
+  bottom: 0;
   overflow-x: hidden;
 }
 
@@ -132,15 +134,18 @@ section {
 }
 
 .form-section {
+  /* background-color: red; */
+  padding-top: 7rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 100%; */
+  height: 100%;
   width: 70%;
 }
 
 .reset-button {
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -153,18 +158,35 @@ section {
 .checkout-section {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-00);
+  gap: 0.5rem;
   width: 30%;
+  max-height: 85dvh;
   height: 100%;
-  background-color: var(--pico-card-sectioning-background-color);
-  padding: var(--sp-1);
   border-radius: 0.5rem;
+  overflow-y: scroll;
+  background-color: purple;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.checkout-section-header,
+.button-container {
+  padding: 0.25rem;
+}
+
+.checkout-section-header {
+  position: sticky;
+  top: 0;
 }
 
 .button-container {
   margin-top: auto;
   display: flex;
   justify-content: center;
+  position: sticky;
+  bottom: 0;
 }
 
 .item-barcode {
