@@ -9,8 +9,10 @@ const error = ref('')
 
 function handleSubmit() {
   if (inputValue.value) {
+    // If there's no patron barcode scan and set this value first
     if (!patronBarcode.value) patronBarcode.value = inputValue.value
-    else itemBarcodes.value.push(inputValue.value)
+    // Else add new item to start of the barcodes array
+    else itemBarcodes.value.splice(0, 0, inputValue.value)
 
     inputValue.value = ''
   }
@@ -126,6 +128,8 @@ function submitCheckout() {
   overflow-x: hidden;
 }
 
+/* UI layout */
+
 .form-section {
   display: flex;
   flex-direction: column;
@@ -144,44 +148,39 @@ function submitCheckout() {
   width: 100dvw;
 }
 
-.hidden-element {
-  /* TODO: absolute positioning is not moving this element at all.
-  fix this!
-   */
-  margin-left: var(--sidebar-width);
+.checkout-section.hidden-element {
+  display: flex;
 }
 
 .checkout-section {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  /* background-color: purple; */
+  padding-inline-start: 1rem;
+
+  overflow-y: scroll;
 
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   width: var(--sidebar-width);
+  margin: 0.75rem;
+  margin-top: 0;
+  border-radius: 10px;
+
+  background-color: var(--clr-main-800);
+
+  @media (prefers-color-scheme: light) {
+    background-color: var(--clr-main-200);
+  }
 }
 
 section {
   transition: all 200ms ease-in-out;
 }
 
-/* .form-section:has(+ .checkout-section.hidden-element) {
-  width: 100%;
-} */
-
-/* .form-section {
-  background-color: red;
-  padding-top: 7rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 70%;
-} */
+/* Checkout UI Elements */
 
 .reset-button {
   margin-top: 0.5rem;
@@ -190,29 +189,10 @@ section {
   gap: 0.5rem;
 }
 
-/* .checkout-section.hidden-element {
-  margin-right: -30%;
-}
-
-.checkout-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 30%;
-  max-height: 85dvh;
-  height: 100%;
-  border-radius: 0.5rem;
-  overflow-y: scroll;
-  background-color: purple;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-} */
-
 .checkout-section-header,
 .button-container {
-  padding: 0.25rem;
+  padding: 0.5rem;
+  background-color: inherit;
 }
 
 .checkout-section-header {
@@ -245,6 +225,7 @@ section {
 
 .hidden-element {
   opacity: 0;
+  display: none;
 }
 
 .error-message {

@@ -7,9 +7,3 @@
   </nav>
   <RouterView />
 </template>
-
-<style scoped>
-nav {
-  border-bottom: solid 1px;
-}
-</style>
