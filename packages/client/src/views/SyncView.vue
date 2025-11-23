@@ -59,7 +59,7 @@ async function updateCheckouts() {
 }
 </script>
 <template>
-  <section>
+  <div class="container" v-if="checkouts?.length">
     <section>
       <div class="action-bar">
         <article v-if="checkouts">
@@ -87,12 +87,21 @@ async function updateCheckouts() {
         </tr>
       </tbody>
     </table>
-  </section>
+  </div>
+  <div class="container fallback" v-else>
+    <p>No checkouts to sync</p>
+  </div>
 </template>
 <style scoped>
-main {
-  width: 75%;
+.container {
+  width: 85%;
   margin: auto;
+}
+
+.fallback {
+  text-align: center;
+  align-content: center;
+  height: 80dvh;
 }
 
 .action-bar {
