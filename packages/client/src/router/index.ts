@@ -4,6 +4,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     // TODO: Add landing route for `/` path
+    { path: '/', name: 'libstats', component: () => import('@/layouts/OfflineCirculation.vue') },
     {
       path: '/checkout',
       component: () => import('@/layouts/OfflineCirculation.vue'),
