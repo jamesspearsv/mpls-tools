@@ -62,6 +62,10 @@ li {
   margin-top: 0.25rem;
 }
 
+a {
+  color: var(--clr-main-400);
+}
+
 li:not(:last-child) {
   margin-bottom: 0.25rem;
 }

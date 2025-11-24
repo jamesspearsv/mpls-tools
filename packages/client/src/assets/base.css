@@ -1,5 +1,5 @@
 @import url('./reset.css');
-c :root {
+:root {
   --sp-00: 0.5rem;
   --sp-0: 1rem;
   --sp-1: 1.5rem;
@@ -8,6 +8,8 @@ c :root {
   --sp-4: 4rem;
   --sp-5: 5rem;
   --c-danger: #dc3545;
+
+  --clr-accent: #0d4525;
 }
 
 * {
