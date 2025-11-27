@@ -38,7 +38,6 @@ watch(
 <style scoped>
 article {
   padding: 0.25rem 0.5rem;
-  min-width: 20dvw;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -52,6 +51,10 @@ article {
 article:has(details:open),
 article:has(details[open]) {
   height: 112px;
+}
+
+details {
+  width: 20dvw;
 }
 
 ul {
