@@ -54,7 +54,7 @@ article:has(details[open]) {
 }
 
 details {
-  width: 20dvw;
+  min-width: 25dvw;
 }
 
 ul {

@@ -20,5 +20,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.19.1"
+  },
+  "dependencies": {
+    "@packages/common": "workspace:*"
   }
 }
