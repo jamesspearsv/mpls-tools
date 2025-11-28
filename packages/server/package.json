@@ -10,17 +10,17 @@
     "drizzle:studio": "pnpm exec drizzle-kit studio"
   },
   "dependencies": {
-    "@hono/node-server": "^1.14.3",
-    "@libsql/client": "^0.15.8",
+    "@hono/node-server": "^1.19.6",
+    "@libsql/client": "^0.15.15",
     "@packages/common": "workspace:^",
-    "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.44.1",
-    "hono": "^4.7.10"
+    "dotenv": "^16.6.1",
+    "drizzle-orm": "^0.44.7",
+    "hono": "^4.10.7"
   },
   "devDependencies": {
-    "@types/node": "^20.17.57",
-    "drizzle-kit": "^0.31.1",
-    "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "@types/node": "^20.19.25",
+    "drizzle-kit": "^0.31.7",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   }
 }

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const router = createRouter({
+export default createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     // TODO: Add landing route for `/` path
@@ -28,5 +28,3 @@ const router = createRouter({
     // },
   ],
 })
-
-export default router
