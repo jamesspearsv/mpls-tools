@@ -23,5 +23,11 @@
   },
   "dependencies": {
     "@packages/common": "workspace:*"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
   }
 }
