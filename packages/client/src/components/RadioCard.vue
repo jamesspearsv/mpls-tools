@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import type { InteractionTypes } from '@packages/common';
-import type { icons } from 'feather-icons';
-import FeatherIcon from './FeatherIcon.vue';
+import type { InteractionTypes } from '@packages/common'
+import type { icons } from 'feather-icons'
+import FeatherIcon from './FeatherIcon.vue'
 
-defineProps<{
+const props = defineProps<{
   groupName: string
   value: InteractionTypes
+  selected: boolean
 }>()
 
 const icon_map = {
@@ -17,15 +18,26 @@ const icon_map = {
   [K in InteractionTypes]: keyof typeof icons
 }
 
-// todo: define emit events
+const emit = defineEmits<{ change: [typeof props.value] }>()
+
+function handleRadioChange() {
+  emit('change', props.value)
+}
 </script>
 
 <template>
   <article class="radio-card">
     <label>
-      <FeatherIcon :icon="icon_map[value]" /> <span>{{ value }}</span></label
-    >
-    <input type="radio" :value="value" name="interaction_type" />
+      <FeatherIcon :icon="icon_map[value]" />
+      <span>{{ value }}</span>
+    </label>
+    <input
+      type="radio"
+      name="interaction_type"
+      :value="props.value"
+      :checked="props.selected"
+      @change="handleRadioChange"
+    />
   </article>
 </template>
 
