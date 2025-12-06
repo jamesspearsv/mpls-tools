@@ -15,8 +15,17 @@ function handleReset() {
   selected_type.value = null
 }
 
-function handleSubmit() {
-  // todo: add submission logic
+async function handleSubmit() {
+  if (selected_type.value) {
+    const submissionUrl = '/libstats/interactions'
+
+    await fetch(submissionUrl, {
+      method: 'POST',
+      body: JSON.stringify({
+        type: selected_type.value,
+      }),
+    })
+  }
 }
 </script>
 
@@ -38,7 +47,7 @@ function handleSubmit() {
         <span><FeatherIcon icon="rotate-ccw" /></span>
         Reset
       </button>
-      <button class="form-button">
+      <button class="form-button" @click="async () => await handleSubmit()">
         <span><FeatherIcon icon="check-square" /></span>
         Submit
       </button>

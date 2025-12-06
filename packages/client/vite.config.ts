@@ -15,6 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/offline': 'http://localhost:3000',
+      '/libstats': 'http://localhost:3000',
     },
   },
   build: {

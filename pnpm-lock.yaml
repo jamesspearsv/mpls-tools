@@ -113,9 +113,9 @@ importers:
       hono:
         specifier: ^4.10.7
         version: 4.10.7
-      nanoid-good:
-        specifier: ^3.1.0
-        version: 3.1.0
+      nanoid:
+        specifier: ^5.1.6
+        version: 5.1.6
     devDependencies:
       '@types/node':
         specifier: ^20.19.25
@@ -1955,9 +1955,6 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  nanoid-good@3.1.0:
-    resolution: {integrity: sha512-gG9D+AVHAZ+t2mAk3sw+Bx08VzOBc8fc+JylIzCLbEoRYakvQK9RiI3U+bXjdlMc5Ec4W9zUQsZZKngjifv7Vw==}
-
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -1968,11 +1965,13 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
+  nanoid@5.1.6:
+    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
-
-  naughty-words@1.2.0:
-    resolution: {integrity: sha512-0iadX6fN+3NsfvIRtWmmpEX9VsoIQ6n9FwyIxmew9w5yzFNqMgs/Ky0eAC/z5xXSHtqlVoByiovdROikwH9SXQ==}
 
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
@@ -4145,18 +4144,13 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  nanoid-good@3.1.0:
-    dependencies:
-      nanoid: 3.3.11
-      naughty-words: 1.2.0
-
   nanoid@3.3.11: {}
 
   nanoid@5.1.5: {}
 
-  natural-compare@1.4.0: {}
+  nanoid@5.1.6: {}
 
-  naughty-words@1.2.0: {}
+  natural-compare@1.4.0: {}
 
   node-domexception@1.0.0: {}
 

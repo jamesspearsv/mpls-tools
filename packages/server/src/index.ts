@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { readFile } from "node:fs/promises";
-import { api } from "./offlineCirc.js";
+import { offline_circ } from "./offlineCirc.js";
 import { logger } from "hono/logger";
 import { libstats } from "./libstats.js";
 
@@ -31,7 +31,7 @@ app.use(
     },
   }),
 );
-app.route("/offline", api);
+app.route("/offline", offline_circ);
 app.route("/libstats", libstats);
 
 app.get("/*", async (c) => {

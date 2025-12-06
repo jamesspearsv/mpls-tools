@@ -2,11 +2,11 @@ import { Hono } from "hono";
 import {
   insertCheckouts,
   selectCheckouts,
-  UpdateCheckouts,
+  updateCheckouts,
 } from "./db/queries.js";
 import type { Result } from "@packages/common";
 
-export const api = new Hono();
+export const offline_circ = new Hono();
 
 /**
 TODO: update endpoint responses
@@ -14,17 +14,17 @@ TODO: update endpoint responses
 - an appropriate status code
 - either data or an error message
 */
-api.post("/sync", async (c) => {
+offline_circ.post("/sync", async (c) => {
   const checkoutIDs = await c.req.json();
   if (!(checkoutIDs instanceof Array)) {
     return c.json({ success: false, message: "Bad request" });
   }
 
-  const result = await UpdateCheckouts(checkoutIDs as number[]);
+  const result = await updateCheckouts(checkoutIDs as number[]);
   return c.json(result);
 });
 
-api
+offline_circ
   .get("/checkouts", async (c) => {
     const result = await selectCheckouts();
     return c.json(result);

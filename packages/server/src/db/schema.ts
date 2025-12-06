@@ -1,6 +1,7 @@
 import { INTERACTION_TYPES } from "@packages/common";
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { nanoid } from "nanoid";
 
 export const checkouts = sqliteTable("checkouts", {
   id: integer().primaryKey({ autoIncrement: true }),
@@ -11,7 +12,10 @@ export const checkouts = sqliteTable("checkouts", {
 });
 
 export const referenceInteractions = sqliteTable("reference_interactions", {
-  id: text().primaryKey().notNull(),
-  timestamp: integer({ mode: "timestamp_ms" }).notNull(),
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => nanoid()),
+  //! Unix timestamp in seconds
+  timestamp: integer({ mode: "timestamp" }).default(sql`(unixepoch('now'))`),
   type: text({ enum: INTERACTION_TYPES }).notNull(),
 });

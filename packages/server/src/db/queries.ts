@@ -1,7 +1,8 @@
-import { eq, isNull } from 'drizzle-orm';
-import { db } from './connection.js';
-import { checkouts } from './schema.js';
-import type { Result } from '@packages/common';
+import { eq, isNull } from "drizzle-orm";
+import { db } from "./connection.js";
+import { checkouts, referenceInteractions } from "./schema.js";
+import type { Interaction, InteractionTypes, Result } from "@packages/common";
+import { nanoid } from "nanoid";
 
 export async function selectCheckouts(): Promise<
   Result<{ id: number; patronBarcode: string; itemBarcode: string }[]>
@@ -14,22 +15,22 @@ export async function selectCheckouts(): Promise<
     return { success: true, data: rows };
   } catch (error) {
     if (error instanceof Error) return { success: false, error };
-    throw new Error('Server Error');
+    throw new Error("Server Error");
   }
 }
 
 export async function insertCheckouts(
   patronBarcode: string,
-  itemBarcodes: string[]
+  itemBarcodes: string[],
 ): Promise<Result<{ patronBarcode: string; itemBarcodes: string[] }>> {
   try {
     await db.transaction(async (tx) => {
       for (const itemBarcode of itemBarcodes) {
-        if (itemBarcode === 'debug') throw new Error('Debuging Error');
+        if (itemBarcode === "debug") throw new Error("Debuging Error");
         await tx.insert(checkouts).values({
           patronBarcode,
           itemBarcode,
-          checkoutDate: new Date().toISOString().replace('T', ' '),
+          checkoutDate: new Date().toISOString().replace("T", " "),
         });
       }
     });
@@ -40,24 +41,32 @@ export async function insertCheckouts(
     };
   } catch (error) {
     if (error instanceof Error) return { success: false, error };
-    throw new Error('Server error');
+    throw new Error("Server error");
   }
 }
 
-export async function UpdateCheckouts(checkoutIDs: number[]): Promise<Result> {
+export async function updateCheckouts(checkoutIDs: number[]): Promise<Result> {
   try {
     await db.transaction(async (tx) => {
       for (const id of checkoutIDs) {
         await tx
           .update(checkouts)
-          .set({ syncStatus: new Date().toISOString().replace('T', ' ') })
+          .set({ syncStatus: new Date().toISOString().replace("T", " ") })
           .where(eq(checkouts.id, id));
       }
     });
 
-    return { success: true, data: 'Updated all checkouts' };
+    return { success: true, data: "Updated all checkouts" };
   } catch (error) {
     if (error instanceof Error) return { success: false, error };
-    throw new Error('Server Error');
+    throw new Error("Server Error");
+  }
+}
+
+export async function insertRefInteraction(interaction: InteractionTypes) {
+  try {
+    await db.insert(referenceInteractions).values({ type: interaction });
+  } catch (error) {
+    console.error(error);
   }
 }
