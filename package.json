@@ -13,7 +13,9 @@
     "build:server": "pnpm --filter server build",
     "build:client": "pnpm --filter client build",
     "docker:build": "docker build -t sierra-offline --progress=plain .",
-    "docker:run": "docker run -p 3000:3000 -v app-data:/app/data sierra-offline"
+    "docker:run": "docker run -p 3000:3000 -v app-data:/app/data sierra-offline",
+    "server:drizzle-push": "pnpm --filter server drizzle:push",
+    "server:drizzle-studio": "pnpm --filter server drizzle:studio"
   },
   "keywords": [],
   "author": "",

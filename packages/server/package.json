@@ -15,7 +15,8 @@
     "@packages/common": "workspace:^",
     "dotenv": "^16.6.1",
     "drizzle-orm": "^0.44.7",
-    "hono": "^4.10.7"
+    "hono": "^4.10.7",
+    "nanoid-good": "^3.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.19.25",

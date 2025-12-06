@@ -1,10 +1,11 @@
-import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
-import { cors } from 'hono/cors';
-import { serveStatic } from '@hono/node-server/serve-static';
-import { readFile } from 'node:fs/promises';
-import { api } from './api.js';
-import { logger } from 'hono/logger';
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { serveStatic } from "@hono/node-server/serve-static";
+import { readFile } from "node:fs/promises";
+import { api } from "./offlineCirc.js";
+import { logger } from "hono/logger";
+import { libstats } from "./libstats.js";
 
 // TODO: fix this!
 // console.log(__dirname);
@@ -16,25 +17,26 @@ const app = new Hono();
 app.use(cors());
 app.use(logger());
 app.use(
-  '/assets/*',
+  "/assets/*",
   serveStatic({
     /* BUG
      * Relative root path will be different
      * when using pnpm preview and running in production.
      * How to handle this?
      */
-    root: process.env.NODE_ENV === 'production' ? './client' : './dist/client',
+    root: process.env.NODE_ENV === "production" ? "./client" : "./dist/client",
     onNotFound(path, c) {
-      console.log('---> Current working dir: ', process.cwd());
-      console.log('---> Looking for:', path);
+      console.log("---> Current working dir: ", process.cwd());
+      console.log("---> Looking for:", path);
     },
-  })
+  }),
 );
-app.route('/api', api);
+app.route("/offline", api);
+app.route("/libstats", libstats);
 
-app.get('/*', async (c) => {
+app.get("/*", async (c) => {
   return c.html(
-    readFile(__dirname + '/client/index.html', { encoding: 'utf-8' })
+    readFile(__dirname + "/client/index.html", { encoding: "utf-8" }),
   );
 });
 
@@ -45,5 +47,5 @@ serve(
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
-  }
+  },
 );
