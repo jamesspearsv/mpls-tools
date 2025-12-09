@@ -6,5 +6,4 @@ export type Result<T = string> =
   | { success: false; message: string };
 
 export type InteractionTypes = z.infer<typeof InteractionTypesSchema>;
-
 export type InteractionRecord = z.infer<typeof InteractionRecordSchema>;

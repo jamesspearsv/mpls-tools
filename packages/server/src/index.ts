@@ -31,6 +31,9 @@ app.use(
     },
   }),
 );
+
+// TODO: add onError handler for unexpected errors
+
 app.route("/offline", offline_circ);
 app.route("/libstats", libstats);
 

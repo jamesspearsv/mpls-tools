@@ -15,7 +15,8 @@ export const referenceInteractions = sqliteTable("reference_interactions", {
   id: text()
     .primaryKey()
     .$defaultFn(() => nanoid()),
-  //! Unix timestamp in seconds
-  timestamp: integer({ mode: "timestamp" }).default(sql`(unixepoch('now'))`),
+  timestamp: integer({ mode: "timestamp" })
+    .default(sql`(unixepoch('now'))`)
+    .notNull(),
   type: text({ enum: INTERACTION_TYPES }).notNull(),
 });

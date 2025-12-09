@@ -1,7 +1,11 @@
-import { eq, isNull } from "drizzle-orm";
-import { db } from "./connection.js";
-import { checkouts, referenceInteractions } from "./schema.js";
-import type { Interaction, InteractionTypes, Result } from "@packages/common";
+import { DrizzleQueryError, eq, isNull } from "drizzle-orm";
+import { db } from "./drizzleConnection.js";
+import { checkouts, referenceInteractions } from "./drizzleSchema.js";
+import type {
+  InteractionRecord,
+  InteractionTypes,
+  Result,
+} from "@packages/common";
 import { nanoid } from "nanoid";
 
 export async function selectCheckouts(): Promise<
@@ -63,10 +67,21 @@ export async function updateCheckouts(checkoutIDs: number[]): Promise<Result> {
   }
 }
 
-export async function insertRefInteraction(interaction: InteractionTypes) {
+export async function insertRefInteraction(
+  interaction: InteractionTypes,
+): Promise<Result<InteractionRecord>> {
   try {
-    await db.insert(referenceInteractions).values({ type: interaction });
+    const [row] = await db
+      .insert(referenceInteractions)
+      .values({ type: interaction })
+      .returning();
+
+    return { success: true, data: row };
   } catch (error) {
-    console.error(error);
+    if (error instanceof DrizzleQueryError) {
+      return { success: false, message: "Bad query" };
+    }
+
+    throw error;
   }
 }

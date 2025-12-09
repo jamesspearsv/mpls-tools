@@ -5,8 +5,8 @@ export const InteractionTypesSchema = z.enum(INTERACTION_TYPES);
 
 export const InteractionRecordSchema = z.object({
   id: z.string(),
+  timestamp: z.date(),
   type: InteractionTypesSchema,
-  timestamp: z.number(),
 });
 
 export const InteractionRequstSchema = z.object({

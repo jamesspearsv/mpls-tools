@@ -5,13 +5,15 @@ import { INTERACTION_TYPES, type InteractionTypes } from '@packages/common'
 import { ref } from 'vue'
 
 const selected_type = ref<InteractionTypes | null>(null)
+const error = ref('')
 
 function handleRadioChange(value: InteractionTypes) {
   console.log('selected value', value)
   selected_type.value = value
 }
 
-function handleReset() {
+function resetForm() {
+  error.value = ''
   selected_type.value = null
 }
 
@@ -19,18 +21,27 @@ async function handleSubmit() {
   if (selected_type.value) {
     const submissionUrl = '/libstats/interactions'
 
-    await fetch(submissionUrl, {
+    const res = await fetch(submissionUrl, {
       method: 'POST',
       body: JSON.stringify({
         type: selected_type.value,
       }),
     })
+
+    const json = await res.json()
+
+    if (!res.ok) {
+      error.value = json.message!
+    } else {
+      resetForm()
+    }
   }
 }
 </script>
 
 <template>
   <p>Selected type is {{ selected_type ?? 'null' }}</p>
+  <p v-if="error">{{ error }}</p>
   <main>
     <section class="radio-section">
       <RadioCard
@@ -43,7 +54,7 @@ async function handleSubmit() {
       />
     </section>
     <section class="button-section">
-      <button class="form-button" type="reset" @click="handleReset">
+      <button class="form-button" type="reset" @click="resetForm">
         <span><FeatherIcon icon="rotate-ccw" /></span>
         Reset
       </button>
