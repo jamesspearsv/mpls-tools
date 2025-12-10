@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import FeatherIcon from '@/components/FeatherIcon.vue'
 import RadioCard from '@/components/RadioCard.vue'
-import { INTERACTION_TYPES, type InteractionTypes } from '@packages/common'
+import { INTERACTION_TYPES, type InteractionType } from '@packages/common'
 import { ref } from 'vue'
 
-const selected_type = ref<InteractionTypes | null>(null)
+const selected_type = ref<InteractionType | null>(null)
 const error = ref('')
 
-function handleRadioChange(value: InteractionTypes) {
+function handleRadioChange(value: InteractionType) {
   console.log('selected value', value)
   selected_type.value = value
 }

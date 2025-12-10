@@ -3,11 +3,12 @@ import { db } from "./drizzleConnection.js";
 import { checkouts, referenceInteractions } from "./drizzleSchema.js";
 import type {
   InteractionRecord,
-  InteractionTypes,
+  InteractionType,
   Result,
 } from "@packages/common";
 import { nanoid } from "nanoid";
 
+// TODO: Add logic to handle drizzle errors
 export async function selectCheckouts(): Promise<
   Result<{ id: number; patronBarcode: string; itemBarcode: string }[]>
 > {
@@ -18,11 +19,13 @@ export async function selectCheckouts(): Promise<
       .where(isNull(checkouts.syncStatus));
     return { success: true, data: rows };
   } catch (error) {
-    if (error instanceof Error) return { success: false, error };
+    if (error instanceof Error)
+      return { success: false, message: error.message };
     throw new Error("Server Error");
   }
 }
 
+// TODO: handle logic to handle drizzle errors
 export async function insertCheckouts(
   patronBarcode: string,
   itemBarcodes: string[],
@@ -44,11 +47,13 @@ export async function insertCheckouts(
       data: { patronBarcode, itemBarcodes },
     };
   } catch (error) {
-    if (error instanceof Error) return { success: false, error };
+    if (error instanceof Error)
+      return { success: false, message: error.message };
     throw new Error("Server error");
   }
 }
 
+// TODO: Add logic to handle drizzle errors
 export async function updateCheckouts(checkoutIDs: number[]): Promise<Result> {
   try {
     await db.transaction(async (tx) => {
@@ -62,13 +67,14 @@ export async function updateCheckouts(checkoutIDs: number[]): Promise<Result> {
 
     return { success: true, data: "Updated all checkouts" };
   } catch (error) {
-    if (error instanceof Error) return { success: false, error };
+    if (error instanceof Error)
+      return { success: false, message: error.message };
     throw new Error("Server Error");
   }
 }
 
 export async function insertRefInteraction(
-  interaction: InteractionTypes,
+  interaction: InteractionType,
 ): Promise<Result<InteractionRecord>> {
   try {
     const [row] = await db

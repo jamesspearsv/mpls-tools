@@ -1,9 +1,9 @@
 import * as z from "zod";
-import { InteractionRecordSchema, InteractionTypesSchema } from "./schemas";
+import { InteractionRecordSchema, InteractionTypeSchema } from "./schemas";
 
 export type Result<T = string> =
   | { success: true; data: T }
   | { success: false; message: string };
 
-export type InteractionTypes = z.infer<typeof InteractionTypesSchema>;
+export type InteractionType = z.infer<typeof InteractionTypeSchema>;
 export type InteractionRecord = z.infer<typeof InteractionRecordSchema>;
