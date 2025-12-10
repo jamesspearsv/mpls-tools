@@ -9,6 +9,11 @@
     "drizzle:generate": "pnpm exec drizzle-kit generate",
     "drizzle:studio": "pnpm exec drizzle-kit studio"
   },
+  "files": [
+    "dist",
+    "drizzle",
+    "drizzle.config.ts"
+  ],
   "dependencies": {
     "@hono/node-server": "^1.19.6",
     "@libsql/client": "^0.15.15",

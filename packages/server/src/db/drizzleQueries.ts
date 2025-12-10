@@ -84,6 +84,7 @@ export async function insertRefInteraction(
 
     return { success: true, data: row };
   } catch (error) {
+    console.error(error);
     if (error instanceof DrizzleQueryError) {
       return { success: false, message: "Bad query" };
     }

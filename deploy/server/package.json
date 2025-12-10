@@ -1,0 +1,39 @@
+{
+  "name": "@packages/server",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "drizzle:push": "pnpm exec drizzle-kit push",
+    "drizzle:generate": "pnpm exec drizzle-kit generate",
+    "drizzle:studio": "pnpm exec drizzle-kit studio"
+  },
+  "files": [
+    "dist",
+    "drizzle",
+    "drizzle.config.ts"
+  ],
+  "dependencies": {
+    "@hono/node-server": "1.19.6(hono@4.10.7)",
+    "@libsql/client": "0.15.15",
+    "@packages/common": "@packages/common@file:///Users/james/Developer/mpls-tools/packages/common",
+    "dotenv": "16.6.1",
+    "drizzle-orm": "0.44.7(@libsql/client@0.15.15)",
+    "hono": "4.10.7",
+    "nanoid": "5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.25",
+    "drizzle-kit": "0.31.7",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  },
+  "optionalDependencies": {},
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
+  }
+}

@@ -34,4 +34,4 @@ node_modules
 **/coverage
 **/test
 **/__tests__
-**/drizzle.config.ts
+#**/drizzle.config.ts

@@ -1,22 +1,29 @@
 <script lang="ts" setup>
-import type { InteractionTypes } from '@packages/common'
+import type { InteractionType } from '@packages/common'
 import type { icons } from 'feather-icons'
 import FeatherIcon from './FeatherIcon.vue'
 
 const props = defineProps<{
   groupName: string
-  value: InteractionTypes
+  value: InteractionType
   selected: boolean
 }>()
 
-const icon_map = {
+// const icon_map = {
+//   'Known Item Request': 'book',
+//   'Information Services': 'info',
+//   'Tech Help': 'cpu',
+//   'Digital Resources': 'smartphone',
+// } satisfies {
+//   [K in InteractionType]: keyof typeof icons
+// }
+
+const icon_map: Record<InteractionType, keyof typeof icons> = {
   'Known Item Request': 'book',
   'Information Services': 'info',
   'Tech Help': 'cpu',
   'Digital Resources': 'smartphone',
-} satisfies {
-  [K in InteractionTypes]: keyof typeof icons
-}
+} as const
 
 const emit = defineEmits<{ change: [typeof props.value] }>()
 

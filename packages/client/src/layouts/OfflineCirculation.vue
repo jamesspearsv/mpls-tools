@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import type { InteractionTypes } from '@packages/common'
-</script>
-
 <template>
   <nav>
     <ul>

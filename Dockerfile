@@ -18,27 +18,30 @@ FROM base AS build
 
 RUN npm install -g pnpm
 WORKDIR /app
+
+
 COPY --from=deps /app /app
-RUN pnpm build
+RUN pnpm build:common
+RUN pnpm build:app
+
+# Build standalone server deployment bundle
+RUN pnpm --filter ./packages/server deploy --prod /deploy/server
 
 ###############
 ### RUN APP ###
 ###############
 FROM base AS runner
 
-RUN npm install -g pnpm
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV DB_URL=file:/app/data/db.sqlite
 
-COPY --from=build /app/packages/server/dist /app
-COPY --from=build /app/packages/server/package.json /app
-COPY --from=build /app/packages/server/drizzle /app/drizzle
+# Copy server bundle from deps stage
+COPY --from=build /deploy/server/ /app/
 
-RUN pnpm install --prod --prefer-offline
 RUN chmod +x /app/drizzle/migrations-entrypoint.sh
 
 EXPOSE 3000
 ENTRYPOINT ["/app/drizzle/migrations-entrypoint.sh"]
-CMD ["node", "index.js"]
+CMD ["node", "dist/index.js"]

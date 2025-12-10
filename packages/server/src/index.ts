@@ -24,7 +24,7 @@ app.use(
      * when using pnpm preview and running in production.
      * How to handle this?
      */
-    root: process.env.NODE_ENV === "production" ? "./client" : "./dist/client",
+    root: "./dist/client",
     onNotFound(path, c) {
       console.log("---> Current working dir: ", process.cwd());
       console.log("---> Looking for:", path);
