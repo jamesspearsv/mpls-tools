@@ -4,7 +4,9 @@
   "description": "Simple tool to manage offline circulations",
   "scripts": {
     "dev": "pnpm run -r --parallel --aggregate-output dev",
-    "build": "pnpm run -r build",
+    "build": "pnpm build:common && pnpm build:app",
+    "build:common": "pnpm --filter common build",
+    "build:app": "pnpm --filter server build && pnpm --filter client build",
     "start": "pnpm --filter server start",
     "preview": "pnpm build && pnpm start",
     "reset:build": "rm -rf ./packages/server/dist",
@@ -12,13 +14,26 @@
     "dev:server": "pnpm --filter server dev",
     "build:server": "pnpm --filter server build",
     "build:client": "pnpm --filter client build",
-    "docker:build": "docker build -t sierra-offline --progress=plain .",
-    "docker:run": "docker run -p 3000:3000 -v app-data:/app/data sierra-offline"
+    "docker:build": "docker build -t mpls-tools .",
+    "docker:run": "docker run -p 3000:3000 -v app-data:/app/data mpls-tools",
+    "server:drizzle-push": "pnpm --filter server drizzle:push",
+    "server:drizzle-studio": "pnpm --filter server drizzle:studio",
+    "server:drizzle-generate": "pnpm --filter server drizzle:generate",
+    "server:deploy": "rm -rf deploy && pnpm --filter server deploy --prod ./deploy/server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^22.15.29"
+    "@types/node": "^22.19.1"
+  },
+  "dependencies": {
+    "@packages/common": "workspace:*"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
   }
 }

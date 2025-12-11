@@ -12,7 +12,7 @@ const checkouts = ref<Checkout[] | null>(null)
 onMounted(fetchCheckouts)
 
 async function fetchCheckouts() {
-  const res = await fetch('/api/checkouts')
+  const res = await fetch('/offline/checkouts')
   const result = await res.json()
   if (result.success) {
     checkouts.value = result.data as Checkout[]
@@ -46,7 +46,7 @@ function exportCheckouts() {
 async function updateCheckouts() {
   if (!checkouts.value || !checkouts.value?.length) return
   const checkoutIDs = checkouts.value.map((checkout) => checkout.id)
-  const res = await fetch('/api/sync', {
+  const res = await fetch('/offline/sync', {
     method: 'POST',
     body: JSON.stringify(checkoutIDs),
   })

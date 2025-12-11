@@ -31,7 +31,7 @@ function removeItem(index: number) {
 }
 
 function submitCheckout() {
-  const url = `/api/checkouts`
+  const url = `/offline/checkouts`
 
   async function postCheckout() {
     const res = await fetch(url, {
