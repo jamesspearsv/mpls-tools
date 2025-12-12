@@ -92,3 +92,23 @@ export async function insertRefInteraction(
     throw error;
   }
 }
+
+export async function selectInteractions(range: {
+  start: number;
+  end: number;
+}): Promise<Result> {
+  try {
+    const rows = await db
+      .select()
+      .from(referenceInteractions)
+      .groupBy(referenceInteractions.type);
+    return { success: true, data: "" };
+  } catch (error) {
+    console.error(error);
+    if (error instanceof DrizzleQueryError) {
+      return { success: false, message: "Unable to query table" };
+    } else {
+      throw error;
+    }
+  }
+}
