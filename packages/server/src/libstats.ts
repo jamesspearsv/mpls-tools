@@ -1,4 +1,4 @@
-import { InteractionRequstSchema } from "@packages/common";
+import { InteractionRequstSchema, ISODateSchema } from "@packages/common";
 import { Hono } from "hono";
 import {
   insertRefInteraction,
@@ -32,6 +32,28 @@ libstats
     else return c.json({ message: "Server error" }, 500); // handle drizzle errors
   })
   .get(async (c) => {
-    const result = await selectInteractions({ start: 0, end: 0 });
+    // Get localtimezone offset
+    // new Date().getTimezoneOffset / 60 * -1
+
+    // Parsing range state and end date
+    // 1. Convert start date from local time to equivalent UTC time
+    // 2. Convert end date from local time to equivalent UTC time
+
+    const start = c.req.query("start");
+    const end = c.req.query("end");
+
+    const safeStart = ISODateSchema.safeParse(start);
+    const safeEnd = ISODateSchema.safeParse(end);
+
+    if (!safeStart.success || !safeEnd.success) {
+      return c.json(
+        { message: "Bad request. Must submit a valid date range" },
+        400,
+      );
+    }
+
+    // todo: finish parsing date range
+
+    const result = await selectInteractions();
     return c.json({ response: result });
   });
