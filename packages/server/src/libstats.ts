@@ -33,5 +33,5 @@ libstats
   })
   .get(async (c) => {
     const result = await selectInteractions({ start: 0, end: 0 });
-    c.json({ response: result });
+    return c.json({ response: result });
   });

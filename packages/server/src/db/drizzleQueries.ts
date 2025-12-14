@@ -1,10 +1,11 @@
-import { DrizzleQueryError, eq, isNull } from "drizzle-orm";
+import { count, DrizzleQueryError, eq, isNull } from "drizzle-orm";
 import { db } from "./drizzleConnection.js";
 import { checkouts, referenceInteractions } from "./drizzleSchema.js";
-import type {
-  InteractionRecord,
-  InteractionType,
-  Result,
+import {
+  INTERACTION_TYPES,
+  type InteractionRecord,
+  type InteractionType,
+  type Result,
 } from "@packages/common";
 import { nanoid } from "nanoid";
 
@@ -96,13 +97,17 @@ export async function insertRefInteraction(
 export async function selectInteractions(range: {
   start: number;
   end: number;
-}): Promise<Result> {
+}): Promise<Result<{ type: InteractionType; count: number }[]>> {
   try {
     const rows = await db
-      .select()
+      .select({
+        type: referenceInteractions.type,
+        count: count(referenceInteractions.type),
+      })
       .from(referenceInteractions)
       .groupBy(referenceInteractions.type);
-    return { success: true, data: "" };
+
+    return { success: true, data: rows };
   } catch (error) {
     console.error(error);
     if (error instanceof DrizzleQueryError) {
