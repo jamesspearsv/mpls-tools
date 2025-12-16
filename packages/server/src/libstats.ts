@@ -46,7 +46,6 @@ libstats
       );
     }
 
-    // todo: finish parsing date range
     const start_time = parseDateStringToTime(`${start}T00:00:00`);
     const end_time = parseDateStringToTime(`${end}T23:59:59`);
 

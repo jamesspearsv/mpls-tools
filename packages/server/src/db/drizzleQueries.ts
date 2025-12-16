@@ -1,4 +1,12 @@
-import { count, DrizzleQueryError, eq, isNull } from "drizzle-orm";
+import {
+  count,
+  DrizzleQueryError,
+  eq,
+  gte,
+  isNull,
+  lte,
+  and,
+} from "drizzle-orm";
 import { db } from "./drizzleConnection.js";
 import { checkouts, referenceInteractions } from "./drizzleSchema.js";
 import {
@@ -95,8 +103,8 @@ export async function insertRefInteraction(
 }
 
 export async function selectInteractions(range: {
-  start: number;
-  end: number;
+  start: Date;
+  end: Date;
 }): Promise<Result<{ type: InteractionType; count: number }[]>> {
   try {
     const rows = await db
@@ -105,6 +113,12 @@ export async function selectInteractions(range: {
         count: count(referenceInteractions.type),
       })
       .from(referenceInteractions)
+      .where(
+        and(
+          gte(referenceInteractions.timestamp, range.start),
+          lte(referenceInteractions.timestamp, range.end),
+        ),
+      )
       .groupBy(referenceInteractions.type);
 
     return { success: true, data: rows };
