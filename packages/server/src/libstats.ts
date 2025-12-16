@@ -4,6 +4,7 @@ import {
   insertRefInteraction,
   selectInteractions,
 } from "./db/drizzleQueries.js";
+import { parseDateStringToTime } from "./lib.js";
 
 export const libstats = new Hono();
 
@@ -32,13 +33,6 @@ libstats
     else return c.json({ message: "Server error" }, 500); // handle drizzle errors
   })
   .get(async (c) => {
-    // Get localtimezone offset
-    // new Date().getTimezoneOffset / 60 * -1
-
-    // Parsing range state and end date
-    // 1. Convert start date from local time to equivalent UTC time
-    // 2. Convert end date from local time to equivalent UTC time
-
     const start = c.req.query("start");
     const end = c.req.query("end");
 
@@ -53,7 +47,12 @@ libstats
     }
 
     // todo: finish parsing date range
+    const start_time = parseDateStringToTime(`${start}T00:00:00`);
+    const end_time = parseDateStringToTime(`${end}T23:59:59`);
 
-    const result = await selectInteractions();
+    const result = await selectInteractions({
+      start: start_time,
+      end: end_time,
+    });
     return c.json({ response: result });
   });
