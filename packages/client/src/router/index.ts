@@ -3,12 +3,21 @@ import { createRouter, createWebHistory } from 'vue-router'
 export default createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'libstats', component: () => import('@/layouts/LibStats.vue') },
+    { path: '/', redirect: { name: 'record' } },
+    {
+      path: '/ref',
+      component: () => import('@/layouts/LibStatsLayout.vue'),
+      children: [
+        { path: '', name: 'libstats', component: () => import('@/views/InteractionForm.vue') },
+        { path: 'summary', name: 'summary', component: () => null },
+      ],
+    },
     {
       path: '/checkout',
-      component: () => import('@/layouts/OfflineCirculation.vue'),
+      redirect: { name: 'checkout' },
+      component: () => import('@/layouts/OfflineCircLayout.vue'),
       children: [
-        { path: '', name: 'checkout', component: () => import('@/views/CheckoutView.vue') },
+        { path: '', name: 'offline-circ', component: () => import('@/views/CheckoutView.vue') },
         { path: 'sync', name: 'sync', component: () => import('@/views/SyncView.vue') },
       ],
     },

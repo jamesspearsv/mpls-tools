@@ -5,6 +5,7 @@ import ModuleSwitcher from './components/ModuleSwitcher.vue'
 </script>
 
 <template>
+  <p>Current route is {{ $route.fullPath }}</p>
   <RouterView />
   <div class="switcher_container">
     <ModuleSwitcher :path="$route.path" />

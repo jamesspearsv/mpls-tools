@@ -28,7 +28,7 @@ watch(
           <router-link :to="{ name: 'libstats' }">LibStats</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'checkout' }">Offline Circulation</router-link>
+          <router-link :to="{ name: 'offline-circ' }">Offline Circulation</router-link>
         </li>
       </ul>
     </details>
