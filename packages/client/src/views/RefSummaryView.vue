@@ -11,12 +11,8 @@ const router = useRouter()
 const start = defineModel<string>('start')
 const end = defineModel<string>('end')
 
-/* TODO: fix navigation bug below.
-When models are defined the watcher is fired and resets navigation history.
-Read more about Vue scope. https://michaelnthiessen.com/levels-of-vue-scope
-*/
 watchEffect(() => {
-  router.push({ name: 'summary', query: { start: start.value, end: end.value } })
+  router.replace({ name: 'summary', query: { start: start.value, end: end.value } })
 })
 
 onMounted(() => {
