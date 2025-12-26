@@ -9,7 +9,7 @@ export default createRouter({
       component: () => import('@/layouts/LibStatsLayout.vue'),
       children: [
         { path: '', name: 'libstats', component: () => import('@/views/InteractionForm.vue') },
-        { path: 'summary', name: 'summary', component: () => null },
+        { path: 'summary', name: 'summary', component: () => import('@/views/RefSummaryView.vue') },
       ],
     },
     {

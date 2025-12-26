@@ -24,7 +24,7 @@ libstats
       const result = await insertRefInteraction(safeReq.data.type);
 
       // Return inserted row if successful
-      if (result.success) return c.json(result);
+      if (result.success) return c.json(result.data);
     }
 
     // Handle expected errors
