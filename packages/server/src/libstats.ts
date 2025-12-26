@@ -53,5 +53,9 @@ libstats
       start: start_time,
       end: end_time,
     });
-    return c.json({ response: result });
+
+    /* TODO: Map select response to a client friendly object
+    ex. Record<InteractionType, number>
+    */
+    return c.json(result);
   });
