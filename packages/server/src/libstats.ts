@@ -1,4 +1,8 @@
-import { InteractionRequstSchema, ISODateSchema } from "@packages/common";
+import {
+  InteractionRequstSchema,
+  ISODateSchema,
+  type RefSummary,
+} from "@packages/common";
 import { Hono } from "hono";
 import {
   insertRefInteraction,
@@ -15,6 +19,9 @@ export const libstats = new Hono();
  */
 libstats
   .post("/interactions", async (c) => {
+    /* POST `/libstats/interactions`
+     * Accepts a request with a valid interaction type
+     * Returns a newly inserted row  of the requested interaciton */
     const req = await c.req.json();
 
     // Parse json request
@@ -33,6 +40,9 @@ libstats
     else return c.json({ message: "Server error" }, 500); // handle drizzle errors
   })
   .get(async (c) => {
+    /* GET `/libstats/interactions`
+     * Accepts a valid start and end date in ISO format
+     * Returns a RefSummary of the date range queried */
     const start = c.req.query("start");
     const end = c.req.query("end");
 
@@ -54,8 +64,16 @@ libstats
       end: end_time,
     });
 
-    /* TODO: Map select response to a client friendly object
-    ex. Record<InteractionType, number>
-    */
-    return c.json(result);
+    if (!result.success) return c.json({ message: "Server error" }, 500);
+
+    // Parse and format query response
+    const ref_summary = {
+      "Digital Resources": 0,
+      "Information Services": 0,
+      "Known Item Request": 0,
+      "Tech Help": 0,
+    } satisfies RefSummary;
+    result.data.map((row) => (ref_summary[row.type] = row.count));
+
+    return c.json(ref_summary);
   });

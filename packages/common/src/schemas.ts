@@ -14,3 +14,5 @@ export const InteractionRequstSchema = z.object({
 });
 
 export const ISODateSchema = z.iso.date();
+
+export const RefSummarySchema = z.record(InteractionTypeSchema, z.int());
