@@ -5,7 +5,6 @@ import ModuleSwitcher from './components/ModuleSwitcher.vue'
 </script>
 
 <template>
-  <p>Current route is {{ $route.fullPath }}</p>
   <RouterView />
   <div class="switcher_container">
     <ModuleSwitcher :path="$route.path" />
@@ -17,5 +16,11 @@ import ModuleSwitcher from './components/ModuleSwitcher.vue'
   position: absolute;
   top: 0.5rem;
   right: 1rem;
+}
+</style>
+<style>
+nav {
+  border-bottom: var(--border-style);
+  margin-bottom: 0.5rem;
 }
 </style>

@@ -40,7 +40,6 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <p>Selected type is {{ selected_type ?? 'null' }}</p>
   <p v-if="error">{{ error }}</p>
   <main>
     <section class="radio-section">

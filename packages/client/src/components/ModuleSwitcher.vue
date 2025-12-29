@@ -55,6 +55,7 @@ article:has(details[open]) {
 
 details {
   min-width: 25dvw;
+  cursor: pointer;
 }
 
 ul {

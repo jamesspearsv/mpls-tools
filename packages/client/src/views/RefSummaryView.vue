@@ -1,12 +1,10 @@
 <script lang="ts" setup>
+import RefSummarySidebar from '@/components/RefSummarySidebar.vue'
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-
-// const start = ref(route.query.start || null)
-// const end = ref(route.query.end || null)
 
 const start = defineModel<string>('start')
 const end = defineModel<string>('end')
@@ -19,8 +17,13 @@ watchEffect(async () => {
 
 // Fetch reference data from server
 watchEffect(async () => {
+  // TODO: Improve the flow of this logic.
+  // 1. Check is date range is selected; if not return
+  // 2. Check that start <= end; if not return error
+  // 3. Format query URL
+  // 4. Handle request and store summary in state
   if (!start.value || !end.value) return (summary.value = '')
-  if (start.value > end.value) return (summary.value = '') // TODO: Add UI feedback for this error
+  if (start.value > end.value) return (summary.value = 'Start date must be before end date')
 
   const res = await fetch(`/libstats/interactions?start=${start.value}&end=${end.value}`)
   const json = await res.json()
@@ -36,32 +39,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <p>
-    Query state: { start:
-    <span>{{ start }}</span
-    >, end: <span>{{ end }}</span> }
-  </p>
-  <p v-if="start && end">
-    Date comparision:
-    {{
-      start === end ? 'Start and end same' : start < end ? 'Start before end' : 'Start after end'
-    }}
-  </p>
-
-  <section>
-    <form>
-      <div>
-        <label for="start">Starting Date</label>
-        <input type="date" name="start" v-model="start" />
-      </div>
-      <div>
-        <label for="end">Ending Date</label>
-        <input type="date" v-model="end" />
-      </div>
-    </form>
-  </section>
-
-  <section>
-    <pre>{{ summary }}</pre>
-  </section>
+  <div>
+    <RefSummarySidebar v-model:start="start" v-model:end="end" />
+    <main>
+      <!-- <section>
+        <form>
+          <div>
+            <label for="start">Starting Date</label>
+            <input type="date" name="start" v-model="start" />
+          </div>
+          <div>
+            <label for="end">Ending Date</label>
+            <input type="date" v-model="end" />
+          </div>
+        </form>
+      </section> -->
+      <section>
+        <pre>{{ summary }}</pre>
+      </section>
+    </main>
+  </div>
 </template>
