@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import RefSummaryInfo from '@/components/RefSummaryInfo.vue'
 import RefSummarySidebar from '@/components/RefSummarySidebar.vue'
+import type { RefSummary } from '@packages/common'
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -8,7 +10,7 @@ const router = useRouter()
 
 const start = defineModel<string>('start')
 const end = defineModel<string>('end')
-const summary = ref()
+const summary = ref<RefSummary | null>(null)
 
 // Save query state in current URL
 watchEffect(async () => {
@@ -22,8 +24,8 @@ watchEffect(async () => {
   // 2. Check that start <= end; if not return error
   // 3. Format query URL
   // 4. Handle request and store summary in state
-  if (!start.value || !end.value) return (summary.value = '')
-  if (start.value > end.value) return (summary.value = 'Start date must be before end date')
+  if (!start.value || !end.value) return (summary.value = null)
+  if (start.value > end.value) return (summary.value = null)
 
   const res = await fetch(`/libstats/interactions?start=${start.value}&end=${end.value}`)
   const json = await res.json()
@@ -40,23 +42,40 @@ onMounted(() => {
 
 <template>
   <div>
-    <RefSummarySidebar v-model:start="start" v-model:end="end" />
+    <aside class="rounded bordered">
+      <RefSummarySidebar v-model:start="start" v-model:end="end" />
+    </aside>
     <main>
-      <!-- <section>
-        <form>
-          <div>
-            <label for="start">Starting Date</label>
-            <input type="date" name="start" v-model="start" />
-          </div>
-          <div>
-            <label for="end">Ending Date</label>
-            <input type="date" v-model="end" />
-          </div>
-        </form>
-      </section> -->
-      <section>
-        <pre>{{ summary }}</pre>
-      </section>
+      <RefSummaryInfo :summary="summary" :start="start" :end="end" />
     </main>
   </div>
 </template>
+
+<style scoped>
+div {
+  gap: 2rem;
+
+  /*position: absolute;
+  top: 5rem;
+  left: 0;
+  right: 0;
+  bottom: 1rem;*/
+}
+
+aside {
+  position: relative;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+/*aside::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -1rem;
+  width: 2px;
+  height: 100%;
+  background-color: var(--clr-bg-alt);
+}*/
+</style>

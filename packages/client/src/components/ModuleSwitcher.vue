@@ -51,6 +51,7 @@ article {
 article:has(details:open),
 article:has(details[open]) {
   height: 112px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
 details {
