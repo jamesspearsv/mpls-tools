@@ -8,13 +8,12 @@ export default createRouter({
       path: '/ref',
       component: () => import('@/layouts/LibStatsLayout.vue'),
       children: [
-        { path: '', name: 'libstats', component: () => import('@/views/InteractionForm.vue') },
+        { path: '', name: 'libstats', component: () => import('@/views/InteractionView.vue') },
         { path: 'summary', name: 'summary', component: () => import('@/views/RefSummaryView.vue') },
       ],
     },
     {
       path: '/checkout',
-      redirect: { name: 'checkout' },
       component: () => import('@/layouts/OfflineCircLayout.vue'),
       children: [
         { path: '', name: 'offline-circ', component: () => import('@/views/CheckoutView.vue') },

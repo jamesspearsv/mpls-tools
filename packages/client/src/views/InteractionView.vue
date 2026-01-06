@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import FeatherIcon from '@/components/FeatherIcon.vue'
 import RadioCard from '@/components/RadioCard.vue'
+import ToastNotification from '@/components/ToastNotification.vue'
 import { INTERACTION_TYPES, type InteractionType } from '@packages/common'
 import { ref } from 'vue'
 
 const selected_type = ref<InteractionType | null>(null)
 const error = ref('')
+const toast_message = ref('')
 
 function handleRadioChange(value: InteractionType) {
   console.log('selected value', value)
@@ -32,7 +34,9 @@ async function handleSubmit() {
 
     if (!res.ok) {
       error.value = json.message!
+      toast_message.value = json.message!
     } else {
+      toast_message.value = 'Interaction saved!'
       resetForm()
     }
   }
@@ -64,6 +68,8 @@ async function handleSubmit() {
       </button>
     </section>
   </main>
+
+  <ToastNotification :content="toast_message" />
 </template>
 
 <style scoped>
