@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { watch } from 'vue'
 
-// TODO: Improve the components timeout logic
-// It should appear visible when the props component changes
-// and hide when the timout fires
+const props = defineProps<{
+  content: string
+  visible: boolean
+}>()
 
-const props = defineProps<{ content: string }>()
-const visible = ref(false)
-
-// Add timeout logic to toast
+// TODO: Fix this hack!
+// This component emits a timeout event that the parent can listen to
+// that indicates when its visible state should change. This component
+// should handle it visibility state internally
+const emit = defineEmits<{ timeout: [] }>()
 watch(props, () => {
-  // If the new props.content value is truthy
-  // and the component is timed out then
-  // set the time out to false, setTimeout function
-  if (props.content) {
-    visible.value = true
+  if (props.visible) {
     setTimeout(() => {
-      visible.value = false
+      emit('timeout')
     }, 1500)
   }
 })
 </script>
+
 <template>
   <article :class="visible && 'visible'">{{ content }}</article>
 </template>
@@ -33,10 +32,29 @@ article {
   right: 35%;
   top: -10rem;
 
-  transition: all 200ms ease-in-out;
+  transition: all 250ms ease-in-out;
 }
 
 article.visible {
   top: 1rem;
+}
+
+article.visible::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 10px;
+  background-color: var(--clr-accent);
+  /*border-bottom-left-radius: var(--border-radius);*/
+  /*border-bottom-right-radius: var(--border-radius);*/
+  border-radius: var(--border-radius);
+
+  transition: width 1400ms ease-in-out;
+
+  @starting-style {
+    width: 100%;
+  }
 }
 </style>

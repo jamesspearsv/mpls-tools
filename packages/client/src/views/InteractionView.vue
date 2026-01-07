@@ -3,11 +3,15 @@ import FeatherIcon from '@/components/FeatherIcon.vue'
 import RadioCard from '@/components/RadioCard.vue'
 import ToastNotification from '@/components/ToastNotification.vue'
 import { INTERACTION_TYPES, type InteractionType } from '@packages/common'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const selected_type = ref<InteractionType | null>(null)
-const error = ref('')
 const toast_message = ref('')
+const toast_visible = ref(false)
+
+watch(toast_message, () => {
+  if (toast_message.value) toast_visible.value = true
+})
 
 function handleRadioChange(value: InteractionType) {
   console.log('selected value', value)
@@ -15,7 +19,6 @@ function handleRadioChange(value: InteractionType) {
 }
 
 function resetForm() {
-  error.value = ''
   selected_type.value = null
 }
 
@@ -33,7 +36,6 @@ async function handleSubmit() {
     const json = await res.json()
 
     if (!res.ok) {
-      error.value = json.message!
       toast_message.value = json.message!
     } else {
       toast_message.value = 'Interaction saved!'
@@ -44,8 +46,6 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <!-- <p>Selected type is {{ selected_type ?? 'null' }}</p> -->
-  <p v-if="error">{{ error }}</p>
   <main>
     <section class="radio-section">
       <RadioCard
@@ -69,7 +69,16 @@ async function handleSubmit() {
     </section>
   </main>
 
-  <ToastNotification :content="toast_message" />
+  <ToastNotification
+    :content="toast_message"
+    :visible="toast_visible"
+    @timeout="
+      () => {
+        toast_visible = false
+        toast_message = ''
+      }
+    "
+  />
 </template>
 
 <style scoped>
