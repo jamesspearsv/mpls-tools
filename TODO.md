@@ -5,8 +5,8 @@
 - [x] Set up packages/common build step
 - [x] Add Zod validation to package/common
 - [x] Add LibStats module UI
+- [x] Set up LibStats database tables
+- [x] Set up module based server routing
+- [x] Add LibStats database query logic
+- [x] Test Docker deployment
 - [ ] Add LibStats module state logic
-- [ ] Set up LibStats database tables
-- [ ] Set up module based server routing
-- [ ] Add LibStats database query logic
-- [ ] Test Docker deployment

@@ -1,14 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'libstats', component: () => import('@/layouts/LibStats.vue') },
+    { path: '/', redirect: { name: 'libstats' } },
+    {
+      path: '/ref',
+      component: () => import('@/layouts/LibStatsLayout.vue'),
+      meta: { title: 'MPLS | LibStats' },
+      children: [
+        { path: '', name: 'libstats', component: () => import('@/views/InteractionView.vue') },
+        { path: 'summary', name: 'summary', component: () => import('@/views/RefSummaryView.vue') },
+      ],
+    },
     {
       path: '/checkout',
-      component: () => import('@/layouts/OfflineCirculation.vue'),
+      component: () => import('@/layouts/OfflineCircLayout.vue'),
+      meta: { title: 'MPLS | Offline Circ' },
       children: [
-        { path: '', name: 'checkout', component: () => import('@/views/CheckoutView.vue') },
+        { path: '', name: 'offline-circ', component: () => import('@/views/CheckoutView.vue') },
         { path: 'sync', name: 'sync', component: () => import('@/views/SyncView.vue') },
       ],
     },
@@ -27,3 +37,10 @@ export default createRouter({
     // },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = (to.meta.title as string) || 'MPLS Tools'
+  next()
+})
+
+export default router

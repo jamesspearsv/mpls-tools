@@ -23,7 +23,7 @@ if [[ ! "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     exit 1
 fi
 
-IMAGE="ghcr.io/jamesspearsv/sierra-offline-tool"
+IMAGE="ghcr.io/jamesspearsv/mpls-tools"
 
 echo "📦 Using version tag: $TAG"
 echo "🛠 Building image for platforms: linux/amd64, linux/arm64"

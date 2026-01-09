@@ -68,7 +68,7 @@ function submitCheckout() {
             name="barcode"
             v-model="inputValue"
             autocomplete="off"
-            minlength="1"
+            minlength="14"
             maxlength="14"
             autofocus
             required

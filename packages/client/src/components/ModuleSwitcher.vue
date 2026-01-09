@@ -28,7 +28,7 @@ watch(
           <router-link :to="{ name: 'libstats' }">LibStats</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'checkout' }">Offline Circulation</router-link>
+          <router-link :to="{ name: 'offline-circ' }">Offline Circulation</router-link>
         </li>
       </ul>
     </details>
@@ -51,10 +51,12 @@ article {
 article:has(details:open),
 article:has(details[open]) {
   height: 112px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
 details {
   min-width: 25dvw;
+  cursor: pointer;
 }
 
 ul {

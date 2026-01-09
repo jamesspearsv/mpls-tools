@@ -18,3 +18,9 @@ import ModuleSwitcher from './components/ModuleSwitcher.vue'
   right: 1rem;
 }
 </style>
+<style>
+nav {
+  border-bottom: var(--border-style);
+  margin-bottom: 0.5rem;
+}
+</style>

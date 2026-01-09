@@ -1,10 +1,19 @@
-import { DrizzleQueryError, eq, isNull } from "drizzle-orm";
+import {
+  count,
+  DrizzleQueryError,
+  eq,
+  gte,
+  isNull,
+  lte,
+  and,
+} from "drizzle-orm";
 import { db } from "./drizzleConnection.js";
 import { checkouts, referenceInteractions } from "./drizzleSchema.js";
-import type {
-  InteractionRecord,
-  InteractionType,
-  Result,
+import {
+  INTERACTION_TYPES,
+  type InteractionRecord,
+  type InteractionType,
+  type Result,
 } from "@packages/common";
 import { nanoid } from "nanoid";
 
@@ -90,5 +99,35 @@ export async function insertRefInteraction(
     }
 
     throw error;
+  }
+}
+
+export async function selectInteractions(range: {
+  start: Date;
+  end: Date;
+}): Promise<Result<{ type: InteractionType; count: number }[]>> {
+  try {
+    const rows = await db
+      .select({
+        type: referenceInteractions.type,
+        count: count(referenceInteractions.type),
+      })
+      .from(referenceInteractions)
+      .where(
+        and(
+          gte(referenceInteractions.timestamp, range.start),
+          lte(referenceInteractions.timestamp, range.end),
+        ),
+      )
+      .groupBy(referenceInteractions.type);
+
+    return { success: true, data: rows };
+  } catch (error) {
+    console.error(error);
+    if (error instanceof DrizzleQueryError) {
+      return { success: false, message: "Unable to query table" };
+    } else {
+      throw error;
+    }
   }
 }
