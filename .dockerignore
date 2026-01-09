@@ -35,3 +35,4 @@ node_modules
 **/test
 **/__tests__
 #**/drizzle.config.ts
+**/dev.sqlite
