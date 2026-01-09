@@ -4,11 +4,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '4321:3000'
+      - "4321:3000"
     environment:
       NODE_ENV: production
     restart: unless-stopped
     volumes:
-      - app-data:/app/data
-volumes:
-  app-data:
+      - ./app-data:/app/data
+      # - /app-data:/app/data
+# volumes:
+# app-data:
