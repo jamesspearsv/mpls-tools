@@ -39,7 +39,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || 'MPLS Tools'
+  document.title = (to.meta.title as string) || 'MPLS Tools'
   next()
 })
 
