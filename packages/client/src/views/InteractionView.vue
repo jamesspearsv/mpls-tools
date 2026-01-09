@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FeatherIcon from '@/components/FeatherIcon.vue'
+import ModalDialog from '@/components/ModalDialog.vue'
 import RadioCard from '@/components/RadioCard.vue'
 import ToastNotification from '@/components/ToastNotification.vue'
 import { INTERACTION_TYPES, type InteractionType } from '@packages/common'
@@ -57,15 +58,44 @@ async function handleSubmit() {
         :selected="selected_type === type"
       />
     </section>
+
     <section class="button-section">
       <button class="form-button" type="reset" @click="resetForm">
         <span><FeatherIcon icon="rotate-ccw" /></span>
         Reset
       </button>
       <button class="form-button" @click="async () => await handleSubmit()">
-        <span><FeatherIcon icon="check-square" /></span>
+        <span><FeatherIcon icon="check" /></span>
         Submit
       </button>
+    </section>
+
+    <section class="help-section">
+      <ModalDialog>
+        <div class="modal-container">
+          <h3>Not sure which to pick?</h3>
+          <div class="modal-section">
+            <article>
+              <div>Digital Resources</div>
+              <p>
+                Question about accessing eBooks, audiobooks, databases, and other digital resources
+              </p>
+            </article>
+            <article>
+              <div>Tech Help</div>
+              <p>Help using smartphones, computers, email services, and other technology</p>
+            </article>
+            <article>
+              <div>Known Item Requests</div>
+              <p>Questions about how to access items and materials</p>
+            </article>
+            <article>
+              <div>Information Services</div>
+              <p>General requests for information like hours of local businesses, sports stats,</p>
+            </article>
+          </div>
+        </div>
+      </ModalDialog>
     </section>
   </main>
 
@@ -103,5 +133,37 @@ async function handleSubmit() {
   justify-content: center;
   align-items: center;
   gap: 0.25rem;
+}
+
+.help-section {
+  display: flex;
+  justify-content: center;
+  align-items: strech;
+}
+
+.modal-container > h3 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.modal-section > article:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.modal-section > article {
+  display: flex;
+  gap: 1rem;
+
+  * > * {
+    flex-wrap: wrap;
+  }
+
+  & > *:first-child {
+    flex: 1;
+  }
+
+  & > *:last-child {
+    flex: 3;
+  }
 }
 </style>
