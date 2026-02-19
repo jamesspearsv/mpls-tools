@@ -2,21 +2,30 @@
 import type { InteractionType, RefSummary } from '@packages/common'
 import FeatherIcon from './FeatherIcon.vue'
 import { icon_map } from '@/lib/constants'
+import { computed } from 'vue'
 
-defineProps<{
+const { summary } = defineProps<{
   summary: RefSummary | null
   start?: string
   end?: string
 }>()
+
+const total = computed(() => {
+  if (!summary) return 0
+  return Object.entries(summary).reduce((t, entry) => t + entry[1], 0)
+})
 </script>
 
 <template>
   <template v-if="summary">
     <section>
-      <article article v-for="entry in Object.entries(summary)" :key="entry[0]">
-        <FeatherIcon :icon="icon_map[entry[0] as InteractionType]" />
-        <p>{{ entry[0] }}</p>
-        <p>{{ entry[1] }}</p>
+      <p>{{ total }} total transaction<span v-if="total > 1">s</span></p>
+    </section>
+    <section>
+      <article v-for="[type, number] in Object.entries(summary)" :key="type">
+        <FeatherIcon :icon="icon_map[type as InteractionType]" />
+        <p>{{ type }}</p>
+        <p>{{ number }}</p>
       </article>
     </section>
   </template>
