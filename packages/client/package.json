@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "chart.js": "^4.5.1",
     "feather-icons": "^4.29.2",
     "jump-css": "^0.6.0",
     "types": "^0.1.1",

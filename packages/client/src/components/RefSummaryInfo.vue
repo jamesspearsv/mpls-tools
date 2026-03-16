@@ -3,6 +3,7 @@ import type { InteractionType, RefSummary } from '@packages/common'
 import FeatherIcon from './FeatherIcon.vue'
 import { icon_map } from '@/lib/constants'
 import { computed } from 'vue'
+import ChartComponent from './ChartComponent.vue'
 
 const { summary } = defineProps<{
   summary: RefSummary | null
@@ -27,6 +28,9 @@ const total = computed(() => {
         <p>{{ type }}</p>
         <p>{{ number }}</p>
       </article>
+    </section>
+    <section>
+      <ChartComponent label="label" :data="0" />
     </section>
   </template>
   <template v-else>
