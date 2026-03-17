@@ -67,13 +67,23 @@ libstats
     if (!result.success) return c.json({ message: "Server error" }, 500);
 
     // Parse and format query response
-    const ref_summary = {
-      "Digital Resources": 0,
-      "Information Services": 0,
-      "Known Item Request": 0,
-      "Tech Help": 0,
-    } satisfies RefSummary;
-    result.data.map((row) => (ref_summary[row.type] = row.count));
+    // const ref_summary = {
+    //   "Digital Resources": 0,
+    //   "Information Services": 0,
+    //   "Known Item Request": 0,
+    //   "Tech Help": 0,
+    // } satisfies RefSummary;
+    //
+    // const ref_summary = [{}];
+
+    console.log(result.data);
+    const ref_summary = result.data.map(
+      (row) =>
+        ({
+          label: row.type,
+          data: row.count,
+        }) satisfies RefSummary,
+    );
 
     return c.json(ref_summary);
   });

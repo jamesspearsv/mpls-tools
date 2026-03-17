@@ -17,4 +17,9 @@ export const ISODateSchema = z.iso.date();
 
 // TODO: refactor RefSummarySchema
 // * Schema needs to be formatted as {label: InteractionTypeSchema, data: number}[]
-export const RefSummarySchema = z.record(InteractionTypeSchema, z.int());
+export const RefSummarySchema = z.array(
+  z.object({
+    label: InteractionTypeSchema,
+    data: z.number(),
+  }),
+);
