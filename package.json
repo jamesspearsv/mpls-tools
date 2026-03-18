@@ -1,6 +1,6 @@
 {
   "name": "sierra-offline-tool",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple tool to manage offline circulations",
   "scripts": {
     "dev": "pnpm run -r --parallel --aggregate-output dev",
