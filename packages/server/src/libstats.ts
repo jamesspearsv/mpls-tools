@@ -1,6 +1,8 @@
 import {
+  INTERACTION_TYPES,
   InteractionRequstSchema,
   ISODateSchema,
+  type InteractionType,
   type RefSummary,
 } from "@packages/common";
 import { Hono } from "hono";
@@ -73,16 +75,18 @@ libstats
     //   "Known Item Request": 0,
     //   "Tech Help": 0,
     // } satisfies RefSummary;
-    //
 
     console.log(result.data);
-    const ref_summary = result.data.map(
-      (row) =>
-        ({
-          label: row.type,
-          data: row.count,
-        }) satisfies RefSummary[number],
-    );
+    const ref_summary = result.data;
+
+    const recorded_types = ref_summary.map((row) => row.type);
+    console.log(recorded_types);
+
+    for (const type of INTERACTION_TYPES) {
+      if (!recorded_types.includes(type as InteractionType)) {
+        ref_summary.push({ type: type as InteractionType, count: 0 });
+      }
+    }
 
     return c.json(ref_summary);
   });

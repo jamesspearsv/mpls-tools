@@ -19,7 +19,7 @@ export const ISODateSchema = z.iso.date();
 // * Schema needs to be formatted as {label: InteractionTypeSchema, data: number}[]
 export const RefSummarySchema = z.array(
   z.object({
-    label: InteractionTypeSchema,
-    data: z.number(),
+    type: InteractionTypeSchema,
+    count: z.number(),
   }),
 );

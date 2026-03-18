@@ -13,7 +13,7 @@ const { summary } = defineProps<{
 
 const total = computed(() => {
   if (!summary) return 0
-  return Object.entries(summary).reduce((t, entry) => t + entry[1].data, 0)
+  return Object.entries(summary).reduce((t, entry) => t + entry[1].count, 0)
 })
 </script>
 
@@ -23,10 +23,10 @@ const total = computed(() => {
       <p>{{ total }} total transaction<span v-if="total > 1">s</span></p>
     </section>
     <section>
-      <article v-for="record in summary" :key="record.label">
-        <FeatherIcon :icon="icon_map[record.label as InteractionType]" />
-        <p>{{ record.label }}</p>
-        <p>{{ record.data }}</p>
+      <article v-for="record in summary" :key="record.count">
+        <FeatherIcon :icon="icon_map[record.type as InteractionType]" />
+        <p>{{ record.type }}</p>
+        <p>{{ record.count }}</p>
       </article>
     </section>
     <section>
