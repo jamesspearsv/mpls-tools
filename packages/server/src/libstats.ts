@@ -74,7 +74,6 @@ libstats
     //   "Tech Help": 0,
     // } satisfies RefSummary;
     //
-    // const ref_summary = [{}];
 
     console.log(result.data);
     const ref_summary = result.data.map(
@@ -82,7 +81,7 @@ libstats
         ({
           label: row.type,
           data: row.count,
-        }) satisfies RefSummary,
+        }) satisfies RefSummary[number],
     );
 
     return c.json(ref_summary);
