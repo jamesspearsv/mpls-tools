@@ -31,3 +31,5 @@ coverage
 *.sqlite*
 *.env*
 .container*
+
+deploy
