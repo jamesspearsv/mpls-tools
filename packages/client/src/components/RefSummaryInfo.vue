@@ -23,14 +23,17 @@ const total = computed(() => {
       <p>{{ total }} total transaction<span v-if="total > 1">s</span></p>
     </section>
     <section>
-      <article v-for="record in summary" :key="record.count">
+      <article v-for="record in summary" :key="record.type">
         <FeatherIcon :icon="icon_map[record.type as InteractionType]" />
         <p>{{ record.type }}</p>
         <p>{{ record.count }}</p>
       </article>
     </section>
     <section>
-      <ChartComponent label="label" :data="0" />
+      <ChartComponent
+        :labels="summary.map((row) => row.type)"
+        :data="summary.map((row) => row.count)"
+      />
     </section>
   </template>
   <template v-else>
